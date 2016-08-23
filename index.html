@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+		<script type="text/javascript" src="bower_components/foundation/js/foundation.min.js"></script>
+
+		<link rel="stylesheet" href="bower_components/foundation/css/foundation.min.css" />
+  </head>
+  <body ng-app="crosswordApp" ng-controller="puzzleCtrl">
+    <form action="">
+	    <puzzle data="crosswordData" rows="rows"></puzzle>
+		<div>
+			<input type="text"  id="input" />
+			<input type="submit" value="submit" />
+		</div>
+
+		<div id="result">
+			<ul></ul>
+		</div>
+
+
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+      $('form').submit(function(){
+        socket.emit('message', $('#input').val());
+        $('#input').val('');
+        return false;
+      });
+      socket.on('message', function(msg){
+      	console.log('rec', arguments);
+        $('#result ul').append($('<li>').text(msg));
+      });
+    </script>
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/puzzle/puzzleController.js"></script>
+    <script type="text/javascript" src="app/puzzle/puzzleDirective.js"></script>
+  </body>
+</html>

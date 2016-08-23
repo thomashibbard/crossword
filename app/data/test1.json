@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "name": "crossword test data 1",
+    "size": 3
+  },
+  "rows": [
+    [
+      {
+        "hasValue":true,
+        "hasClue": true,
+        "clue": "across clue 1",
+        "correctValue": "A"
+      },
+      {
+        "hasValue":true,
+        "hasClue": false,
+        "correctValue": "B"
+      },
+      {
+        "hasValue":false,
+        "hasClue": false,
+        "correctValue": "C"
+      }
+    ],
+    [
+      {
+        "hasValue":true,
+        "hasClue": true,
+        "clue": "across clue 1",
+        "correctValue": "D"
+      },
+      {
+        "hasValue":true,
+        "hasClue": false,
+        "correctValue": "E"
+      },
+      {
+        "hasValue":false,
+        "hasClue": false,
+        "correctValue": "F"
+      }
+    ]
+  ]
+}

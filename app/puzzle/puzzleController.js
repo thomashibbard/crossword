@@ -1,24 +1,16 @@
 var app = angular.module('crosswordApp');
 app.controller('puzzleCtrl', puzzleController);
-puzzleController.$inject = ['$scope', '$http', '$timeout'];
+puzzleController.$inject = ['$scope', '$http', 'PuzzleService'];
 
-function puzzleController($scope, $http, $timeout){
+function puzzleController($scope, $http, PuzzleService){
 
-
-	$http({
-		method: 'GET',
-		url: './app/data/test1.json'
-	})
+	PuzzleService.getPuzzleJson()
 	.then(function(data){
-		$scope.crosswordData = data.data;
-		$scope.rows = $scope.crosswordData.rows;
-		console.log($scope.crosswordData);
 
-		//console.log('data', $scope.crosswordData)
+		console.log('data from service', data);
+		$scope.rows = data.data.rows
 	}, function(err){
-		console.error('err', arguments);
+		console.error('err', err);
 	});
-
-
 
 }

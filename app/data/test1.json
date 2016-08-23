@@ -39,6 +39,24 @@
         "hasClue": false,
         "correctValue": "F"
       }
+    ],
+    [
+      {
+        "hasValue":true,
+        "hasClue": true,
+        "clue": "across clue 1",
+        "correctValue": "G"
+      },
+      {
+        "hasValue":true,
+        "hasClue": false,
+        "correctValue": "H"
+      },
+      {
+        "hasValue":false,
+        "hasClue": false,
+        "correctValue": "I"
+      }
     ]
   ]
 }

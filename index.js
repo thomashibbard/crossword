@@ -13,9 +13,10 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-  socket.on('message', function(msg){
-  	console.log('getting message', msg)
-    io.emit('message', msg);
+	console.log('user connected');
+  socket.on('key', function(keyObj){
+  	console.log('key', keyObj)
+    io.emit('key', keyObj);
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');

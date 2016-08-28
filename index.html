@@ -59,10 +59,13 @@
           ng-init="rowIndex=$index">
       <div  class="square"
             ng-repeat="square in row track by $index"
-            ng-init="squareIndex=$index"
-            ng-class="{'col-last': squareIndex===row.length-1, 'row-last': rowIndex===row.length-1, 'void': !square }">
+            ng-init="squareIndex=$index; canonicalIndex=(rowIndex+1)*(squareIndex+1)"
+            ng-class="{'col-last': squareIndex===row.length-1, 'row-last': rowIndex===row.length-1, 'void': !square }"
+            ng-click="hightlightVector($event)">
 
-            {{row.length}}--{{squareIndex}}
+            <div  ng-if="crosswordGridnums[squareIndex]"
+                  class="xy-id">{{canonicalIndex}}</div>
+            <span>{{square}}</span>
       </div>
     </div>
     <script type="text/javascript" src="app/app.js"></script>

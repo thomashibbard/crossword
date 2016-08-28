@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="dist/css/main.css" />
   </head>
   <body ng-app="crosswordApp" ng-controller="crosswordCtrl">
-    <div class="row">
+<!--     <div class="row">
       <div class="square void">
         <div class="xy-id">1</div>
         <span>
@@ -53,14 +53,16 @@
         <div class="xy-id">1</div>
         <span>j</span>
       </div>
-    </div>
+    </div> -->
     <div  class="row"
           ng-repeat="row in rowChunk track by $index"
           ng-init="rowIndex=$index">
       <div  class="square"
             ng-repeat="square in row track by $index"
-            ng-init="squareIndex=$index">
-        {{square}}{{rowIndex}}::{{squareIndex}}
+            ng-init="squareIndex=$index"
+            ng-class="{'col-last': squareIndex===row.length-1, 'row-last': rowIndex===row.length-1, 'void': !square }">
+
+            {{row.length}}--{{squareIndex}}
       </div>
     </div>
     <script type="text/javascript" src="app/app.js"></script>

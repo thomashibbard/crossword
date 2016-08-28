@@ -1,16 +1,8 @@
-var app = angular.module('crosswordApp');
-app.controller('puzzleCtrl', puzzleController);
-puzzleController.$inject = ['$scope', '$http', 'PuzzleService'];
+var app = angular.module('crosswordApp')
+  .controller('crosswordCtrl', crosswordCtrl);
 
-function puzzleController($scope, $http, PuzzleService){
+  crosswordCtrl.$inject = ['$scope', 'CrosswordService'];
 
-	PuzzleService.getPuzzleJson()
-	.then(function(data){
-
-		console.log('data from service', data);
-		$scope.rows = data.data.rows
-	}, function(err){
-		console.error('err', err);
-	});
-
+function crosswordCtrl($scope, CrosswordService){
+ console.log(CrosswordService.getCrosswordData());
 }

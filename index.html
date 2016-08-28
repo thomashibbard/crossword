@@ -4,54 +4,59 @@
     <title>Socket.IO chat</title>
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
-		<script type="text/javascript" src="bower_components/foundation/js/foundation.min.js"></script>
+    <script type="text/javascript" src="bower_components/foundation/js/foundation.min.js"></script>
 
-		<link rel="stylesheet" href="bower_components/foundation/css/foundation.min.css" />
+   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+   <link href="http://getskeleton.com/dist/css/skeleton.css"  rel="stylesheet" type="text/css"/>
+   <link rel="stylesheet" href="dist/css/main.css" />
   </head>
-  <body ng-app="crosswordApp" ng-controller="puzzleCtrl">
-    <form action="">
-	    <puzzle></puzzle>
-		<div>
-			<input type="text"  id="input" />
-			<input type="submit" value="submit" />
-		</div>
+<body ng-app="crosswordApp" ng-controller="crosswordCtrl">
+  <div class="row">
+    <div class="square void">
+      <div class="xy-id">1</div>
+      <span>
+        a</span>
+    </div>
+    <div class="square void">
+      <div class="xy-id">1</div>
+      <span>
+        b</span>
+        </div>
+    <div class="square col-last">
+      <div class="xy-id">1</div>
+      <span>
+        c</span>
+        </div>
+  </div>
+  <div class="row">
+    <div class="square">
+      <div class="xy-id">1</div>
+      <span>d</span>
+    </div>
+    <div class="square void">
+      <div class="xy-id">1</div>
+      <span>e</span>
+      </div>
+    <div class="square col-last">
+      <div class="xy-id">1</div>
+      <span>f</span>
+      </div>
+  </div>
+  <div class="row">
+    <div class="square row-last">
+      <div class="xy-id">1</div>
+      <span>h</span>
+    </div>
+    <div class="square void row-last">
+      <div class="xy-id">1</div>
+      <span>i</span>
+    </div>
+    <div class="square void col-last row-last">
+      <div class="xy-id">1</div>
+      <span>j</span>
+    </div>
+  </div>
 
-		<div id="result">
-			<ul></ul>
-		</div>
-
-
-    </form>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-      var socket = io();
-      $('form').submit(function(){
-        socket.emit('message', $('#input').val());
-        $('#input').val('');
-        return false;
-      });
-      socket.on('message', function(msg){
-      	console.log('rec', arguments);
-        $('#result ul').append($('<li>').text(msg));
-      });
-
-
-      $('body').on('keyup', '.crossword__input', function(e){
-      	var keyObj = {
-      		key: $(this).val(),
-      		id: $(this).attr('id')
-      	};
-      	socket.emit('key', keyObj);
-      	console.log(keyObj);
-      	return false;
-      });
-      socket.on('key', function(keyObj){
-      	console.log('res', keyObj);
-        $('#' + keyObj.id).val(keyObj.key);
-      });
-
-
-    </script>
     <script type="text/javascript" src="app/app.js"></script>
     <script type="text/javascript" src="app/puzzle/puzzleController.js"></script>
     <script type="text/javascript" src="app/puzzle/puzzleDirective.js"></script>

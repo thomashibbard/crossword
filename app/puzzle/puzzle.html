@@ -1,15 +1,16 @@
 <!-- <textarea id="#a">DATA=>{{rows}}</textarea> -->
-<table>
-	<tr ng-repeat="row in rows"
-			ng-init="rowIndex = $index"
-			class="">
-		<td ng-repeat="col in row"
-				ng-init="colIndex = $index"
-				class="">
-				<input class="crossword__input"
-							 id="row-{{rowIndex}}-col-{{colIndex}}"
-							 maxlength="1" />
+<div>
+	<div 	ng-repeat="row in rows"
+				ng-init="rowIndex = $index"
+				class="row">
+		<div	ng-repeat="col in row"
+					ng-init="colIndex = $index"
+					class="columns small-4">
+				<div	class="crossword__input"
+							id="row-{{rowIndex}}-col-{{colIndex}}"
+							maxlength="1">
+				</div>
 				<!-- {{row[$index].correctValue}} -->
-		</td>
-	</tr>
-</table>
+		</div>
+	</div>
+</div>

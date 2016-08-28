@@ -11,57 +11,14 @@
     <link rel="stylesheet" href="dist/css/main.css" />
   </head>
   <body ng-app="crosswordApp" ng-controller="crosswordCtrl">
-<!--     <div class="row">
-      <div class="square void">
-        <div class="xy-id">1</div>
-        <span>
-        a</span>
-      </div>
-      <div class="square void">
-        <div class="xy-id">1</div>
-        <span>b</span>
-      </div>
-      <div class="square col-last">
-        <div class="xy-id">1</div>
-        <span>c</span>
-      </div>
-    </div>
-    <div class="row">
-      <div class="square">
-        <div class="xy-id">1</div>
-        <span>d</span>
-      </div>
-      <div class="square void">
-        <div class="xy-id">1</div>
-        <span>e</span>
-      </div>
-      <div class="square col-last">
-        <div class="xy-id">1</div>
-        <span>f</span>
-      </div>
-    </div>
-    <div class="row">
-      <div class="square row-last">
-        <div class="xy-id">1</div>
-        <span>h</span>
-      </div>
-      <div class="square void row-last">
-        <div class="xy-id">1</div>
-        <span>i</span>
-      </div>
-      <div class="square void col-last row-last">
-        <div class="xy-id">1</div>
-        <span>j</span>
-      </div>
-    </div> -->
     <div  class="row"
           ng-repeat="row in rowChunk track by $index"
           ng-init="rowIndex=$index">
       <div  class="square"
             ng-repeat="square in row track by $index"
             ng-init="squareIndex=$index; canonicalIndex=getCanonicalIndex(rowIndex, squareIndex)"
-            ng-class="{'col-last': squareIndex===row.length-1, 'row-last': rowIndex===row.length-1, 'void': !square }"
-            ng-click="hightlightVector($event)">
+            ng-class="{'col-last': squareIndex===row.length-1, 'row-last': rowIndex===row.length-1, 'void': !square, 'activeSquare': activeSquareId, 'active-square': activeSquareIndex===canonicalIndex }"
+            ng-click="selectClue(canonicalIndex, rowIndex, squareIndex)">
 
             <div  ng-if="crosswordGridnums[getCanonicalIndex(rowIndex, squareIndex)]"
                   class="xy-id">{{crosswordGridnums[getCanonicalIndex(rowIndex, squareIndex)]}}</div>

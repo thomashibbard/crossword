@@ -54,8 +54,15 @@
         <span>j</span>
       </div>
     </div>
-    <div  ng-repeat="row in crosswordData"
-      class="row"></div>
+    <div  class="row"
+          ng-repeat="row in rowChunk track by $index"
+          ng-init="rowIndex=$index">
+      <div  class="square"
+            ng-repeat="square in row track by $index"
+            ng-init="squareIndex=$index">
+        {{square}}{{rowIndex}}::{{squareIndex}}
+      </div>
+    </div>
     <script type="text/javascript" src="app/app.js"></script>
     <script type="text/javascript" src="app/puzzle/puzzleController.js"></script>
     <script type="text/javascript" src="app/puzzle/puzzleDirective.js"></script>

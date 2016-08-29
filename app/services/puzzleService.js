@@ -54,26 +54,34 @@ function CrosswordService() {
     return self.crosswordData;
   }
 
-  this.formatCrosswordData = function(crosswordData){
-    var acrossCounter = 0;
-    var downCounter = 0;
-    return crosswordData.grid.map(function(item, gridItemIndex){
+  this.formatGridData = function(crosswordGridData){
+
+    return crosswordGridData.map(function(item, gridItemIndex){
       var squareObj = {};
-
       if(item === '.'){
-
         squareObj.correctStr = '';
         squareObj.void = true;
       }else{
-
         squareObj.void = false;
         squareObj.correctStr = item;
-
       }
-
       return squareObj;
     });
+  };
 
+  this.formatClueData = function(crosswordClueData){
+    var clues = {
+      across: {},
+      down: {}
+    };
+    for (var clueKey in crosswordClueData){
+      crosswordClueData[clueKey].forEach(function(clue){
+        var match = clue.match(/^\d+/);
+        clues[clueKey][match[0]] = clue
+      });
+    }
+    console.log(clues);
+    return clues;
   };
 
   this.setCrosswordGridNums = function(crosswordData){
@@ -86,7 +94,7 @@ function CrosswordService() {
     var self = this;
     var cols = self.getCrosswordSize().cols;
     return y * cols + x;
-  }
+  };
 
   this.splitGridIntoRows = function(crosswordGrid, crosswordSize){
     var self = this;
@@ -100,12 +108,12 @@ function CrosswordService() {
     });
     console.log('chunked', chunked);
     return chunked;
-  }
+  };
 
   this.getCrosswordSize = function(){
     var self = this;
     return self.crosswordData.size;
-  }
+  };
 
 }
 

@@ -23,7 +23,9 @@
                         'activeSquare': activeSquareId,
                         'active-square': activeSquareIndex===canonicalIndex }"
             ng-click="selectClue(canonicalIndex, rowIndex, squareIndex)">
-            <div  ng-if="crosswordGridnums[square.canonicalIndex]"
+            <div  ng-show="crosswordGridnums[square.canonicalIndex]"
+                  ng-data-clue-across="{{getClue(crosswordGridnums[square.canonicalIndex], 'across')}}"
+                  ng-data-clue-down="{{getClue(crosswordGridnums[square.canonicalIndex], 'down')}}"
                   class="xy-id">{{crosswordGridnums[square.canonicalIndex]}}</div>
             <span>{{square.correctStr || false}}</span>
       </div>

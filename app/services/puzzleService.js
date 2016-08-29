@@ -48,4 +48,44 @@ function CrosswordService() {
       "uniclue": false
     };
   }
+
+  this.formatCrosswordData = function(crosswordData){
+    var acrossCounter = 0;
+    var downCounter = 0;
+    return crosswordData.grid.map(function(item, gridItemIndex){
+      var squareObj = {};
+
+      if(item === '.'){
+        squareObj.correctStr = '';
+        squareObj.void = true;
+        acrossCounter+=1;
+        downCounter+=1;
+      }else{
+        squareObj.void = false;
+        squareObj.correctStr = item;
+        squareObj.clueAcross = crosswordData.clues.across[acrossCounter];
+        squareObj.clueDown = crosswordData.clues.down[downCounter];
+
+      }
+      console.log(squareObj);
+      return squareObj;
+    });
+
+  };
+
+  this.setCrosswordGridNums = function(crosswordData){
+    return crosswordData.gridnums.map(function(item){
+      return item === 0 ? false : item;
+    });
+  };
+
+  this.getCanonicalIndex = function(){
+
+  }
+
+  this.splitGridIntoRows = function(crosswordGrid, crosswordSize){
+    return _.chunk(crosswordGrid, crosswordSize.cols);
+  }
+
+
 }

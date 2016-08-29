@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>Crossword</title>
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="bower_components/foundation/js/foundation.min.js"></script>
@@ -17,12 +17,11 @@
       <div  class="square"
             ng-repeat="square in row track by $index"
             ng-init="squareIndex=$index; canonicalIndex=getCanonicalIndex(rowIndex, squareIndex)"
-            ng-class="{'col-last': squareIndex===row.length-1, 'row-last': rowIndex===row.length-1, 'void': !square, 'activeSquare': activeSquareId, 'active-square': activeSquareIndex===canonicalIndex }"
+            ng-class="{'col-last': squareIndex===row.length-1, 'row-last': rowIndex===row.length-1, 'void': square.void, 'activeSquare': activeSquareId, 'active-square': activeSquareIndex===canonicalIndex }"
             ng-click="selectClue(canonicalIndex, rowIndex, squareIndex)">
-
             <div  ng-if="crosswordGridnums[getCanonicalIndex(rowIndex, squareIndex)]"
                   class="xy-id">{{crosswordGridnums[getCanonicalIndex(rowIndex, squareIndex)]}}</div>
-            <span>{{square}}</span>
+            <span>{{square.correctStr || false}}</span>
       </div>
     </div>
     <script type="text/javascript" src="app/app.js"></script>

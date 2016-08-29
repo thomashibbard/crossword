@@ -10,40 +10,29 @@ function crosswordCtrl($scope, CrosswordService){
 	$scope.activeVectorId = 'a';
 	$scope.activeSquareIndex = 0;
 
+ $scope.crosswordGrid = CrosswordService.formatCrosswordData($scope.crosswordData);
+ $scope.crosswordGridnums = CrosswordService.setCrosswordGridNums($scope.crosswordData);
+ $scope.rowChunk = CrosswordService.splitGridIntoRows($scope.crosswordGrid, $scope.crosswordSize);
 
-	$scope.crosswordGrid = $scope.crosswordData.grid.map(function(item){
-		return item === '.' ? false : item;
-	});
-
-	$scope.crosswordGridnums = $scope.crosswordData.gridnums.map(function(item){
-		return item === 0 ? false : item;
-	});
-
-	$scope.getCanonicalIndex = function(rowIndex, squareIndex){
-		//console.log((rowIndex)*$scope.crosswordSize.rows, squareIndex+1, $scope.crosswordSize);
+	$scope.getCanonicalIndex = function(rowIndex, colIndex){
+		//console.log((rowIndex)*$scope.crosswordSize.rows, colIndex+1, $scope.crosswordSize);
 		var row = rowIndex * $scope.crosswordSize.rows;
-		return row + squareIndex;
-		//(rowIndex+rowChunk.length)+(squareIndex)
+		return row + colIndex;
+		//(rowIndex+rowChunk.length)+(colIndex)
 	}
 
-	splitRows();
-
-	$scope.selectClue = function(canonicalIndex, rowIndex, squareIndex){
-		highlightVector(canonicalIndex, rowIndex, squareIndex);
-		displayClue(canonicalIndex, rowIndex, squareIndex);
+	$scope.selectClue = function(canonicalIndex, rowIndex, colIndex){
+		highlightVector(canonicalIndex, rowIndex, colIndex);
+		displayClue(canonicalIndex, rowIndex, colIndex);
 
 	};
 
-	function splitRows(){
-		$scope.rowChunk = _.chunk($scope.crosswordGrid, $scope.crosswordSize.cols);
-	}
-
-	function displayClue (canonicalIndex, rowIndex, squareIndex){
+	function displayClue (canonicalIndex, rowIndex, colIndex){
 		$scope.activeSquareIndex = canonicalIndex;
 	};
 
-	function highlightVector  (canonicalIndex, rowIndex, squareIndex){
-		console.log('highlighting');
+	function highlightVector  (canonicalIndex, rowIndex, colIndex){
+		console.log('canonicalIndex', canonicalIndex, 'rowIndex', rowIndex, 'colIndex', colIndex);
 	};
 
 	function getClueId(){

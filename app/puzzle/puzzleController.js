@@ -19,12 +19,14 @@ function crosswordCtrl($scope, CrosswordService){
 		return item === 0 ? false : item;
 	});
 
-	splitRows();
-
-	function splitRows(){
-		$scope.rowChunk = _.chunk($scope.crosswordGrid, $scope.crosswordSize.cols);
+	$scope.getCanonicalIndex = function(rowIndex, squareIndex){
+		//console.log((rowIndex)*$scope.crosswordSize.rows, squareIndex+1, $scope.crosswordSize);
+		var row = rowIndex * $scope.crosswordSize.rows;
+		return row + squareIndex;
+		//(rowIndex+rowChunk.length)+(squareIndex)
 	}
-	console.log($scope.crosswordData)
+
+	splitRows();
 
 	$scope.selectClue = function(canonicalIndex, rowIndex, squareIndex){
 		highlightVector(canonicalIndex, rowIndex, squareIndex);
@@ -32,23 +34,22 @@ function crosswordCtrl($scope, CrosswordService){
 
 	};
 
+	function splitRows(){
+		$scope.rowChunk = _.chunk($scope.crosswordGrid, $scope.crosswordSize.cols);
+	}
+
 	function displayClue (canonicalIndex, rowIndex, squareIndex){
 		$scope.activeSquareIndex = canonicalIndex;
 	};
 
 	function highlightVector  (canonicalIndex, rowIndex, squareIndex){
-		console.log('in here thomas')
+		console.log('highlighting');
 	};
 
 	function getClueId(){
 		//console.log(arguments);
 	}
 
-	$scope.getCanonicalIndex = function(rowIndex, squareIndex){
-		//console.log((rowIndex)*$scope.crosswordSize.rows, squareIndex+1, $scope.crosswordSize);
-		var row = rowIndex * $scope.crosswordSize.rows;
-		return row + squareIndex;
-		//(rowIndex+rowChunk.length)+(squareIndex)
-	}
+
 	//console.log($scope.crosswordData);
 }

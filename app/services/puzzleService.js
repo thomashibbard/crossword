@@ -2,8 +2,11 @@ var app = angular.module('crosswordApp')
 app.service('CrosswordService', CrosswordService);
 
 function CrosswordService() {
-  this.getCrosswordData = function() {
-    return {
+
+  this.getCrosswordData = function(){
+
+    var self = this;
+    self.crosswordData = {
       "acrossmap": null,
       "admin": false,
       "answers": {
@@ -47,6 +50,8 @@ function CrosswordService() {
       "type": null,
       "uniclue": false
     };
+    console.log(self.crosswordData);
+    return self.crosswordData;
   }
 
   this.formatCrosswordData = function(crosswordData){
@@ -56,18 +61,16 @@ function CrosswordService() {
       var squareObj = {};
 
       if(item === '.'){
+
         squareObj.correctStr = '';
         squareObj.void = true;
-        acrossCounter+=1;
-        downCounter+=1;
       }else{
+
         squareObj.void = false;
         squareObj.correctStr = item;
-        squareObj.clueAcross = crosswordData.clues.across[acrossCounter];
-        squareObj.clueDown = crosswordData.clues.down[downCounter];
 
       }
-      console.log(squareObj);
+
       return squareObj;
     });
 
@@ -79,13 +82,31 @@ function CrosswordService() {
     });
   };
 
-  this.getCanonicalIndex = function(){
-
+  this.getCanonicalIndex = function(x, y){
+    var self = this;
+    var cols = self.getCrosswordSize().cols;
+    return y * cols + x;
   }
 
   this.splitGridIntoRows = function(crosswordGrid, crosswordSize){
-    return _.chunk(crosswordGrid, crosswordSize.cols);
+    var self = this;
+    var chunked = _.chunk(crosswordGrid, crosswordSize.cols);
+    _.each(chunked, function(row, rowIndex){
+      _.each(row, function(square, colIndex){
+        square.y = rowIndex;
+        square.x = colIndex;
+        square.canonicalIndex = self.getCanonicalIndex(square.x, square.y);
+      });
+    });
+    console.log('chunked', chunked);
+    return chunked;
   }
 
+  this.getCrosswordSize = function(){
+    var self = this;
+    return self.crosswordData.size;
+  }
 
 }
+
+

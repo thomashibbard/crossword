@@ -5,7 +5,7 @@ var app = angular.module('crosswordApp')
 
 function crosswordCtrl($scope, CrosswordService){
 	$scope.crosswordData = CrosswordService.getCrosswordData();
-	$scope.crosswordSize = $scope.crosswordData.size;
+	$scope.crosswordSize = CrosswordService.getCrosswordSize();
 	$scope.activeSquareId = 1;
 	$scope.activeVectorId = 'a';
 	$scope.activeSquareIndex = 0;
@@ -14,12 +14,6 @@ function crosswordCtrl($scope, CrosswordService){
  $scope.crosswordGridnums = CrosswordService.setCrosswordGridNums($scope.crosswordData);
  $scope.rowChunk = CrosswordService.splitGridIntoRows($scope.crosswordGrid, $scope.crosswordSize);
 
-	$scope.getCanonicalIndex = function(rowIndex, colIndex){
-		//console.log((rowIndex)*$scope.crosswordSize.rows, colIndex+1, $scope.crosswordSize);
-		var row = rowIndex * $scope.crosswordSize.rows;
-		return row + colIndex;
-		//(rowIndex+rowChunk.length)+(colIndex)
-	}
 
 	$scope.selectClue = function(canonicalIndex, rowIndex, colIndex){
 		highlightVector(canonicalIndex, rowIndex, colIndex);

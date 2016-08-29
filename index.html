@@ -16,11 +16,15 @@
           ng-init="rowIndex=$index">
       <div  class="square"
             ng-repeat="square in row track by $index"
-            ng-init="squareIndex=$index; canonicalIndex=getCanonicalIndex(rowIndex, squareIndex)"
-            ng-class="{'col-last': squareIndex===row.length-1, 'row-last': rowIndex===row.length-1, 'void': square.void, 'activeSquare': activeSquareId, 'active-square': activeSquareIndex===canonicalIndex }"
+            ng-init="squareIndex=$index"
+            ng-class="{'col-last': squareIndex===row.length-1,
+                        'row-last': rowIndex===row.length-1,
+                        'void': square.void,
+                        'activeSquare': activeSquareId,
+                        'active-square': activeSquareIndex===canonicalIndex }"
             ng-click="selectClue(canonicalIndex, rowIndex, squareIndex)">
-            <div  ng-if="crosswordGridnums[getCanonicalIndex(rowIndex, squareIndex)]"
-                  class="xy-id">{{crosswordGridnums[getCanonicalIndex(rowIndex, squareIndex)]}}</div>
+            <div  ng-if="crosswordGridnums[square.canonicalIndex]"
+                  class="xy-id">{{crosswordGridnums[square.canonicalIndex]}}</div>
             <span>{{square.correctStr || false}}</span>
       </div>
     </div>

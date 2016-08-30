@@ -55,7 +55,7 @@ function CrosswordService() {
   }
 
   this.formatGridData = function(crosswordGridData){
-
+    var self = this;
     return crosswordGridData.map(function(item, gridItemIndex){
       var squareObj = {};
       if(item === '.'){
@@ -64,9 +64,14 @@ function CrosswordService() {
       }else{
         squareObj.void = false;
         squareObj.correctStr = item;
+        //square.clueDownIndex = self.setClueIndices(squareObj.void, crosswordGridnums[square.canonicalIndex], rowIndex, colIndex, 'down');
       }
       return squareObj;
     });
+  };
+
+  this.setClueIndices = function(){
+
   };
 
   this.formatClueData = function(crosswordClueData){
@@ -96,17 +101,27 @@ function CrosswordService() {
     return y * cols + x;
   };
 
-  this.splitGridIntoRows = function(crosswordGrid, crosswordSize){
+  this.splitGridIntoRowsAndFormat = function(crosswordGrid, crosswordSize){
     var self = this;
     var chunked = _.chunk(crosswordGrid, crosswordSize.cols);
-    _.each(chunked, function(row, rowIndex){
-      _.each(row, function(square, colIndex){
-        square.y = rowIndex;
-        square.x = colIndex;
-        square.canonicalIndex = self.getCanonicalIndex(square.x, square.y);
+    chunked = _.map(chunked, function(row, rowIndex){
+      return _.map(row, function(square, colIndex){
+        var squareObj = {};
+        if(square === '.'){
+          squareObj.correctStr = '';
+          squareObj.void = true;
+        }else{
+          squareObj.void = false;
+          squareObj.correctStr = square;
+        }
+        squareObj.y = rowIndex;
+        squareObj.x = colIndex;
+        squareObj.canonicalIndex = self.getCanonicalIndex(squareObj.x, squareObj.y);
+        return squareObj
       });
     });
-    console.log('chunked', chunked);
+    console.log(chunked)
+    //console.log('chunked', chunked);
     return chunked;
   };
 

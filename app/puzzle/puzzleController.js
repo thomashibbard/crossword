@@ -10,11 +10,11 @@ function crosswordCtrl($scope, CrosswordService){
 	$scope.activeVectorId = 'a';
 	$scope.activeSquareIndex = 0;
 
-	$scope.crosswordGrid = CrosswordService.formatGridData($scope.crosswordData.grid);
+	//$scope.crosswordGrid = CrosswordService.formatGridData($scope.crosswordData.grid);
 	$scope.crosswordClues = CrosswordService.formatClueData($scope.crosswordData.clues);
 	$scope.crosswordGridnums = CrosswordService.setCrosswordGridNums($scope.crosswordData);
- 	$scope.rowChunk = CrosswordService.splitGridIntoRows($scope.crosswordGrid, $scope.crosswordSize);
-
+ 	$scope.rowChunk = CrosswordService.splitGridIntoRowsAndFormat($scope.crosswordData.grid, $scope.crosswordSize);
+ 	console.log($scope.rowChunk)
 	$scope.selectClue = function(canonicalIndex, rowIndex, colIndex){
 		highlightVector(canonicalIndex, rowIndex, colIndex);
 		displayClue(canonicalIndex, rowIndex, colIndex);
@@ -30,6 +30,20 @@ function crosswordCtrl($scope, CrosswordService){
 		}else{
 			return false
 		}
+	};
+
+	$scope.setClueIndices = function(voidFlag, gridNum, rowIndex, colIndex, vector){
+		if(voidFlag){ return;}
+		if(gridNum && gridNum in $scope.crosswordClues[vector]){
+			console.log('in: ', gridNum)
+			return gridNum;
+		}else{
+
+			console.log('colIndex', colIndex, 'rowIndex', rowIndex)
+			console.log('not in: rowIndex', rowIndex, 'colIndex', colIndex)
+			return '';
+		}
+
 	};
 
 	function displayClue (canonicalIndex, rowIndex, colIndex){

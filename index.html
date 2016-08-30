@@ -16,16 +16,20 @@
           ng-init="rowIndex=$index">
       <div  class="square"
             ng-repeat="square in row track by $index"
-            ng-init="squareIndex=$index"
-            ng-class="{'col-last': squareIndex===row.length-1,
+            ng-init="colIndex=$index"
+            ng-class="{'col-last': colIndex===row.length-1,
                         'row-last': rowIndex===row.length-1,
                         'void': square.void,
                         'activeSquare': activeSquareId,
-                        'active-square': activeSquareIndex===canonicalIndex }"
-            ng-click="selectClue(canonicalIndex, rowIndex, squareIndex)">
+                        'active-square': activecolIndex===canonicalIndex }"
+            ng-click="selectClue(canonicalIndex, rowIndex, colIndex)">
             <div  ng-show="crosswordGridnums[square.canonicalIndex]"
+
                   ng-data-clue-across="{{getClue(crosswordGridnums[square.canonicalIndex], 'across')}}"
                   ng-data-clue-down="{{getClue(crosswordGridnums[square.canonicalIndex], 'down')}}"
+
+
+                  ng-data-clue-down-index="{{square.clueIndexDown}}"
                   class="xy-id">{{crosswordGridnums[square.canonicalIndex]}}</div>
             <span>{{square.correctStr || false}}</span>
       </div>
@@ -36,3 +40,4 @@
     <script type="text/javascript" src="app/services/puzzleService.js"></script>
   </body>
 </html>
+<!-- ng-data-clue-across-index="{{setClueIndices(square.void, crosswordGridnums[square.canonicalIndex], rowIndex, colIndex, 'across')}}" -->

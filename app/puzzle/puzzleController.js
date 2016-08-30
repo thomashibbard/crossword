@@ -4,6 +4,7 @@ var app = angular.module('crosswordApp')
   crosswordCtrl.$inject = ['$scope', 'CrosswordService'];
 
 function crosswordCtrl($scope, CrosswordService){
+	CrosswordService.init();
 	$scope.crosswordData = CrosswordService.getCrosswordData();
 	$scope.crosswordSize = CrosswordService.getCrosswordSize();
 	$scope.activeSquareId = 1;

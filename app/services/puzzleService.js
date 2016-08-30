@@ -70,11 +70,25 @@ function CrosswordService() {
     });
   };
 
-  this.setClueIndices = function(){
 
+  this.setClueIndices = function(voidFlag, gridNum, rowIndex, colIndex, column, vector){
+    var self = this;
+
+    if(voidFlag) return;
+
+    if(gridNum && gridNum in self.crosswordClues[vector]){
+      console.log('in: ', gridNum)
+      return gridNum;
+    }else{
+
+      console.log('colIndex', colIndex, 'rowIndex', rowIndex)
+      console.log('not in: rowIndex', rowIndex, 'colIndex', colIndex)
+      return '';
+    }
   };
 
   this.formatClueData = function(crosswordClueData){
+    var self = this;
     var clues = {
       across: {},
       down: {}
@@ -85,14 +99,18 @@ function CrosswordService() {
         clues[clueKey][match[0]] = clue
       });
     }
+    self.crosswordClues = clues;
     console.log(clues);
     return clues;
   };
 
   this.setCrosswordGridNums = function(crosswordData){
-    return crosswordData.gridnums.map(function(item){
+    var self = this;
+    var crosswordGridNums = crosswordData.gridnums.map(function(item){
       return item === 0 ? false : item;
     });
+    self.crosswordGridNums = crosswordGridNums;
+    return crosswordGridNums
   };
 
   this.getCanonicalIndex = function(x, y){
@@ -104,8 +122,9 @@ function CrosswordService() {
   this.splitGridIntoRowsAndFormat = function(crosswordGrid, crosswordSize){
     var self = this;
     var chunked = _.chunk(crosswordGrid, crosswordSize.cols);
-    chunked = _.map(chunked, function(row, rowIndex){
+    var formatted = _.map(chunked, function(row, rowIndex){
       return _.map(row, function(square, colIndex){
+        console.log('colIndex', colIndex);
         var squareObj = {};
         if(square === '.'){
           squareObj.correctStr = '';
@@ -113,21 +132,41 @@ function CrosswordService() {
         }else{
           squareObj.void = false;
           squareObj.correctStr = square;
+          squareObj.y = rowIndex;
+          squareObj.x = colIndex;
+          squareObj.canonicalIndex = self.getCanonicalIndex(squareObj.x, squareObj.y);
+          squareObj.gridNum = self.crosswordGridNums[squareObj.canonicalIndex];
         }
-        squareObj.y = rowIndex;
-        squareObj.x = colIndex;
-        squareObj.canonicalIndex = self.getCanonicalIndex(squareObj.x, squareObj.y);
         return squareObj
       });
     });
-    console.log(chunked)
-    //console.log('chunked', chunked);
-    return chunked;
+
+    self.assignClues(formatted);
+
+    return formatted;
   };
+
+  this.assignClues = function(crosswordGrid){
+    var self = this;
+
+    return _.map(crosswordGrid, function(row, rowIndex){
+      return _.map(row, function(square, colIndex){
+        var column = _.zip.apply(_, crosswordGrid).splice(colIndex, 1);
+        var gridNum = square.gridNum;
+        square.clueDownIndex = self.setClueIndices(square.void, gridNum, rowIndex, colIndex, column, 'down');
+      })
+    });
+  }
 
   this.getCrosswordSize = function(){
     var self = this;
     return self.crosswordData.size;
+  };
+
+  this.init = function(){
+    var self = this;
+    self.getCrosswordData();
+    self.formatClueData();
   };
 
 }

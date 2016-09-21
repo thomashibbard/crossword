@@ -2,6 +2,22 @@ var app = angular.module('crosswordApp')
 app.service('CrosswordService', CrosswordService);
 
 function CrosswordService() {
+  this.crosswordData = {
+    fullData: {},
+    getFullData: function(){
+      return this.fullData;
+    },
+    setFullData: function(crosswordData){
+      this.fullData = crosswordData;
+    },
+    crosswordSize: 21,
+    getCrosswordSize: function(){
+      return this.crosswordSize;
+    },
+    setCrosswordSize: function(){
+
+    }
+  };
 
   this.getCrosswordData = function(){
 
@@ -53,7 +69,23 @@ function CrosswordService() {
     console.log(self.crosswordData);
     return self.crosswordData;
   }
+  this.newOrder = function(crosswordData){
 
+    for(var y = 0; y < size; y++){
+      for(var x = 0; x < size; x++){
+        console.log()
+        obj.grid.push({
+          void: grid[y*size+x] === '.',
+          x: x,
+          y: y,
+          gridNum: gridNums[y*size+x] || '',
+          letter: grid[y*size+x]
+
+        });
+      }
+    }
+
+  }
   this.formatGridData = function(crosswordGridData){
     var self = this;
     return crosswordGridData.map(function(item, gridItemIndex){
@@ -74,15 +106,17 @@ function CrosswordService() {
   this.setClueIndices = function(voidFlag, gridNum, rowIndex, colIndex, column, vector){
     var self = this;
 
+    console.log(arguments)
+
     if(voidFlag) return;
 
     if(gridNum && gridNum in self.crosswordClues[vector]){
-      console.log('in: ', gridNum)
+      console.log('in: ', gridNum);
       return gridNum;
     }else{
 
-      console.log('colIndex', colIndex, 'rowIndex', rowIndex)
-      console.log('not in: rowIndex', rowIndex, 'colIndex', colIndex)
+      console.log('colIndex', colIndex, 'rowIndex', rowIndex);
+      console.log('not in: rowIndex', rowIndex, 'colIndex', colIndex);
       return '';
     }
   };
@@ -154,7 +188,7 @@ function CrosswordService() {
         var column = _.zip.apply(_, crosswordGrid).splice(colIndex, 1);
         var gridNum = square.gridNum;
         square.clueDownIndex = self.setClueIndices(square.void, gridNum, rowIndex, colIndex, column, 'down');
-      })
+      });
     });
   }
 

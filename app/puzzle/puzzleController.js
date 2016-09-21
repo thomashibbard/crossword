@@ -15,7 +15,7 @@ function crosswordCtrl($scope, CrosswordService){
 	$scope.crosswordClues = CrosswordService.formatClueData($scope.crosswordData.clues);
 	$scope.crosswordGridnums = CrosswordService.setCrosswordGridNums($scope.crosswordData);
  	$scope.rowChunk = CrosswordService.splitGridIntoRowsAndFormat($scope.crosswordData.grid, $scope.crosswordSize);
- 	console.log($scope.rowChunk)
+ 	// console.log($scope.rowChunk)
 	$scope.selectClue = function(canonicalIndex, rowIndex, colIndex){
 		highlightVector(canonicalIndex, rowIndex, colIndex);
 		displayClue(canonicalIndex, rowIndex, colIndex);

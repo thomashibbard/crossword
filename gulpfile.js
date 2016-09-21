@@ -31,6 +31,8 @@ var dist = {
 	js: paths.path + '/dist/js'
 };
 
+gulp.task('default', ['serve']);
+
 gulp.task('serve', function () {
 
 			console.log('in else')
